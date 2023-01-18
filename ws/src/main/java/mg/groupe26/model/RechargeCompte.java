@@ -10,15 +10,9 @@ public class RechargeCompte {
     Double montant;
     Integer estValide;
 
-    public RechargeCompte() {
-
-    }
-
-    public RechargeCompte(String id, String utilisateurid, Double montant, Integer estValide) {
-        this.id = id;
-        this.utilisateurid = utilisateurid;
-        this.montant = montant;
-        this.estValide = estValide;
+    public void update(JdbcTemplate j){
+        String query = String.format("update rechargecompte set utilisateurid='%s',montant=%s,estvalide=%s where id= '%s'",getUtilisateurid(),getMontant(),getEstValide(),getID());
+        j.update();
     }
 
     public String getId() {
@@ -53,6 +47,17 @@ public class RechargeCompte {
         this.estValide = estValide;
     }
 
+    public RechargeCompte() {
+
+    }
+
+    public RechargeCompte(String id, String utilisateurid, Double montant, Integer estValide) {
+        this.id = id;
+        this.utilisateurid = utilisateurid;
+        this.montant = montant;
+        this.estValide = estValide;
+    }
+
     public List<RechargeCompte> select(String query, JdbcTemplate jt) {
         return jt.query(query, (rs, row) -> new RechargeCompte(rs.getString("id"),
                 rs.getString("utilisateurid"),
@@ -66,12 +71,7 @@ public class RechargeCompte {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into rechargecompte values (concat('RECHARGECOMPTE',nexval('id_rechargecompte'), %s, %s, %s)", getUtilisateurid(), getMontant(), getEstValide());
+        String query = String.format("insert into rechargecompte values (concat('RECHARGECOMPTE',nextval('id_rechargecompte'), '%s', %s, %s)", getUtilisateurid(), getMontant(), getEstValide());
         jt.update(query);
-    }
-
-    public void update(JdbcTemplate j) {
-        String query = String.format("update rechargecompte set utilisateurid='%s',montant=%s,estvalide=%s where id= '%s'", getUtilisateurid(), getMontant(), getEstValide(), getId());
-        j.update(query);
     }
 }

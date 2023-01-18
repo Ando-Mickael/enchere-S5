@@ -1,13 +1,18 @@
 package mg.groupe26.model;
 
 import java.util.List;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbcore.JdbcTemplate;
 
 public class Personne {
 
     String id;
     String email;
     String mdp;
+
+    public void update(JdbcTemplate j){
+        String query = String.format("update personne set email='%s',mdp='%s' where id= '%s'",getEmail(),getMdp(),getID());
+        j.update();
+    }
 
     public Personne() {
 
@@ -18,7 +23,7 @@ public class Personne {
         this.email = email;
         this.mdp = mdp;
     }
-
+    
     public String getId() {
         return id;
     }
@@ -26,6 +31,7 @@ public class Personne {
     public void setId(String id) {
         this.id = id;
     }
+
 
     public String getEmail() {
         return email;
@@ -43,6 +49,8 @@ public class Personne {
         this.mdp = mdp;
     }
 
+    
+
     public List<Personne> select(String query, JdbcTemplate jt) {
         return jt.query(query, (rs, row) -> new Personne(rs.getString("id"),
                 rs.getString("email"),
@@ -50,12 +58,7 @@ public class Personne {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into personne values (concat('PERSONNE',nexval('id_personne'), %s, %s)", getEmail(), getMdp());
+        String query = String.format("insert into personne values (concat('PERSONNE',nextval('id_personne'), '%s', '%s')", getEmail(), getMdp());
         jt.update(query);
-    }
-    
-    public void update(JdbcTemplate j) {
-        String query = String.format("update personne set email='%s',mdp='%s' where id= '%s'", getEmail(), getMdp(), getId());
-        j.update(query);
     }
 }

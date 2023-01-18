@@ -11,11 +11,12 @@ public class Utilisateur {
     String nom;
     String pseudo;
 
+    
     public Utilisateur() {
 
     }
 
-    public Utilisateur(String id, String personneid, String nom, String pseudo) {
+    public Utilisateur(String id, String personneid,String nom,String pseudo) {
         this.id = id;
         this.personneid = personneid;
         this.nom = nom;
@@ -53,27 +54,25 @@ public class Utilisateur {
     public void setPersonneid(String personneid) {
         this.personneid = personneid;
     }
-
-    List<Utilisateur> getUtilisateur() {
+    
+    List<Utilisateur> getUtilisateur(){
         List<Utilisateur> liste = new ArrayList<>();
-
+        
         return liste;
     }
-
-    List<Utilisateur> select(String query, JdbcTemplate jt) {
+                List<Utilisateur> select(String query, JdbcTemplate jt) {
         return jt.query(query, (rs, row) -> new Utilisateur(rs.getString("id"),
                 rs.getString("personneid"),
                 rs.getString("nom"),
                 rs.getString("pseudo")));
     }
-
-    public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into Utilisateur values (concat('UTILISATEUR',nexval('id_utilisateur'), %s,%s,%s)", getPersonneid(), getNom(), getPseudo());
+    
+        public void insert(JdbcTemplate jt) {
+        String query = String.format("insert into Utilisateur values (concat('UTILISATEUR',nextval('id_utilisateur'), '%s','%s','%s')", getPersonneid(),getNom(),getPseudo());
         jt.update(query);
     }
-
-    public void update(JdbcTemplate j, Utilisateur p) {
-        String query = String.format("update utilisateur set personneid='%s',nom='%s',pseudo='%s' where id= '%s'", p.getPersonneid(), p.getNom(), p.getPseudo(), p.getId());
+    public void update(JdbcTemplate j){
+        String query = String.format("update utilisateur set personneid='%s',nom='%s',pseudo='%s' where id= '%s'",getPersonneid(),getNom(),getPseudo(),getID());
         j.update(query);
     }
 }
