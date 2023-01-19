@@ -1,136 +1,143 @@
+CREATE SEQUENCE seq_Admin NO MINVALUE NO MAXVALUE START WITH 1;
+
+CREATE SEQUENCE seq_Categorie NO MINVALUE NO MAXVALUE START WITH 1;
+
+CREATE SEQUENCE seq_Enchere NO MINVALUE NO MAXVALUE START WITH 1;
+
+CREATE SEQUENCE seq_Historique NO MINVALUE NO MAXVALUE START WITH 1;
+
+CREATE SEQUENCE seq_Photo NO MINVALUE NO MAXVALUE START WITH 1;
+
+CREATE SEQUENCE seq_RechargeCompte NO MINVALUE NO MAXVALUE START WITH 1;
+
+CREATE SEQUENCE seq_ResultatEnchere NO MINVALUE NO MAXVALUE START WITH 1;
+
+CREATE SEQUENCE seq_Token NO MINVALUE NO MAXVALUE START WITH 1;
+
+CREATE SEQUENCE seq_Utilisateur NO MINVALUE NO MAXVALUE START WITH 1;
+
 CREATE TABLE Admin (
-  id varchar(255) NOT NULL,
-  email varchar(255) NOT NULL UNIQUE,
-  mdp varchar(255) NOT NULL,
-  PRIMARY KEY (id)
+	id varchar(255) NOT NULL,
+	email varchar(255) NOT NULL UNIQUE,
+	mdp varchar(255) NOT NULL,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE Categorie (
-  id varchar(255) NOT NULL,
-  intitule varchar(255) NOT NULL UNIQUE,
-  PRIMARY KEY (id)
+	id varchar(255) NOT NULL,
+	intitule varchar(255) NOT NULL UNIQUE,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE Config (
-  cle varchar(255) NOT NULL UNIQUE,
-  valeur varchar(255)
+	cle varchar(255) NOT NULL UNIQUE,
+	valeur varchar(255)
 );
 
 CREATE TABLE Enchere (
-  id varchar(255) NOT NULL,
-  dateDebut timestamp default now(),
-  duree time,
-  prixMin float4 NOT NULL,
-  status int4 DEFAULT 0,
-  Produitid varchar(255) NOT NULL,
-  PRIMARY KEY (id)
+	id varchar(255) NOT NULL,
+	dateDebut timestamp DEFAULT now() NOT NULL,
+	duree time,
+	prixMin float4 NOT NULL,
+	status int4 DEFAULT 0,
+	nomProduit varchar(255) NOT NULL,
+	descriProduit text NOT NULL,
+	Proprietaireid varchar(255) NOT NULL,
+	Categorieid varchar(255) NOT NULL,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE Historique (
-  id varchar(255) NOT NULL,
-  dateEnchere timestamp default now(),
-  prix float4,
-  Utilisateurid varchar(255) NOT NULL,
-  Enchereid varchar(255) NOT NULL,
-  PRIMARY KEY (id)
+	id varchar(255) NOT NULL,
+	dateEnchere timestamp,
+	prix float4,
+	Utilisateurid varchar(255) NOT NULL,
+	Enchereid varchar(255) NOT NULL,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE Photo (
-  id varchar(255) NOT NULL,
-  image varchar(255),
-  Produitid varchar(255) NOT NULL,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE Produit (
-  id varchar(255) NOT NULL,
-  nom varchar(255),
-  descri text,
-  prix float4,
-  ProprietaireId varchar(255) NOT NULL,
-  CategorieId varchar(255) NOT NULL,
-  PRIMARY KEY (id)
+	id varchar(255) NOT NULL,
+	image varchar(255),
+	Enchereid varchar(255) NOT NULL,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE RechargeCompte (
-  id varchar(255) NOT NULL,
-  montant float4,
-  estValide int4 default 0,
-  Utilisateurid varchar(255) NOT NULL,
-  PRIMARY KEY (id)
+	id varchar(255) NOT NULL,
+	montant float4,
+	estValide int4 DEFAULT 0 NOT NULL,
+	dateDemande timestamp DEFAULT now() NOT NULL,
+	Utilisateurid varchar(255) NOT NULL,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE ResultatEnchere (
-  id varchar(255) NOT NULL,
-  prixVente float4,
-  GagnantId varchar(255) NOT NULL,
-  Enchereid varchar(255) NOT NULL,
-  PRIMARY KEY (id)
+	id varchar(255) NOT NULL,
+	prixVente float4,
+	GagnantId varchar(255) NOT NULL,
+	Enchereid varchar(255) NOT NULL,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE Token (
-  id varchar(255) NOT NULL,
-  contenu varchar(255) NOT NULL UNIQUE,
-  dateExpiration timestamp default now() + interval '10 minutes',
-  Utilisateurid varchar(255) NOT NULL,
-  PRIMARY KEY (id)
+	id varchar(255) NOT NULL,
+	contenu varchar(255) NOT NULL UNIQUE,
+	Utilisateurid varchar(255) NOT NULL,
+	dateExpiration timestamp DEFAULT now() + interval '90 minutes' NOT NULL,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE Utilisateur (
-  id varchar(255) NOT NULL,
-  nom varchar(255) NOT NULL,
-  pseudo varchar(255) NOT NULL UNIQUE,
-  email varchar(255) NOT NULL UNIQUE,
-  mdp varchar(255) NOT NULL,
-  PRIMARY KEY (id)
+	id varchar(255) NOT NULL,
+	nom varchar(255) NOT NULL,
+	pseudo varchar(255) NOT NULL UNIQUE,
+	email varchar(255) NOT NULL UNIQUE,
+	mdp varchar(255) NOT NULL,
+	PRIMARY KEY (id)
 );
 
 ALTER TABLE
-  ResultatEnchere
+	ResultatEnchere
 ADD
-  FOREIGN KEY (GagnantId) REFERENCES Utilisateur (id);
+	FOREIGN KEY (GagnantId) REFERENCES Utilisateur (id);
 
 ALTER TABLE
-  ResultatEnchere
+	ResultatEnchere
 ADD
-  FOREIGN KEY (Enchereid) REFERENCES Enchere (id);
+	FOREIGN KEY (Enchereid) REFERENCES Enchere (id);
 
 ALTER TABLE
-  Enchere
+	RechargeCompte
 ADD
-  FOREIGN KEY (Produitid) REFERENCES Produit (id);
+	FOREIGN KEY (Utilisateurid) REFERENCES Utilisateur (id);
 
 ALTER TABLE
-  RechargeCompte
+	Historique
 ADD
-  FOREIGN KEY (Utilisateurid) REFERENCES Utilisateur (id);
+	FOREIGN KEY (Utilisateurid) REFERENCES Utilisateur (id);
 
 ALTER TABLE
-  Produit
+	Historique
 ADD
-  FOREIGN KEY (ProprietaireId) REFERENCES Utilisateur (id);
+	FOREIGN KEY (Enchereid) REFERENCES Enchere (id);
 
 ALTER TABLE
-  Produit
+	Token
 ADD
-  FOREIGN KEY (CategorieId) REFERENCES Categorie (id);
+	FOREIGN KEY (Utilisateurid) REFERENCES Utilisateur (id);
 
 ALTER TABLE
-  Historique
+	Enchere
 ADD
-  FOREIGN KEY (Utilisateurid) REFERENCES Utilisateur (id);
+	FOREIGN KEY (Categorieid) REFERENCES Categorie (id);
 
 ALTER TABLE
-  Historique
+	Photo
 ADD
-  FOREIGN KEY (Enchereid) REFERENCES Enchere (id);
+	FOREIGN KEY (Enchereid) REFERENCES Enchere (id);
 
 ALTER TABLE
-  Photo
+	Enchere
 ADD
-  FOREIGN KEY (Produitid) REFERENCES Produit (id);
-
-ALTER TABLE
-  Token
-ADD
-  FOREIGN KEY (Utilisateurid) REFERENCES Utilisateur (id);
+	FOREIGN KEY (Proprietaireid) REFERENCES Utilisateur (id);
