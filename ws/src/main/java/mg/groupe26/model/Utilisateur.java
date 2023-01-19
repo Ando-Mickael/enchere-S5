@@ -68,12 +68,12 @@ public class Utilisateur extends Personne {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into Utilisateur values (concat('Utilisateur',nextval('seq_utilisateur')), '%s', '%s', '%s', '%s')", getNom(), getPseudo(), getEmail(), getMdp());
+        String query = String.format("insert into Utilisateur values (concat('Utilisateur', nextval('seq_utilisateur')), '%s', '%s', '%s', '%s')", getNom(), getPseudo(), getEmail(), getMdp());
         jt.update(query);
     }
 
     public void update(JdbcTemplate j) {
-        String query = String.format("update utilisateur set nom='%s', pseudo='%s', email='%s', mdp='%s' where id= '%s'", getNom(), getPseudo(), getId(), getEmail(), getMdp());
+        String query = String.format("update utilisateur set nom = '%s', pseudo = '%s', email = '%s', mdp = '%s' where id = '%s'", getNom(), getPseudo(), getEmail(), getMdp(), getId());
         j.update(query);
     }
 }

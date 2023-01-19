@@ -40,12 +40,12 @@ public class Categorie {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into admin values (concat('Categorie',nextval('seq_categorie')), '%s')", getIntitule());
+        String query = String.format("insert into admin values (concat('Categorie', nextval('seq_categorie')), '%s')", getIntitule());
         jt.update(query);
     }
 
     public void update(JdbcTemplate j) {
-        String query = String.format("update categorie set intitule=%s where id= %s", getIntitule(), getId());
+        String query = String.format("update categorie set intitule = %s where id = %s", getIntitule(), getId());
         j.update(query);
     }
 }

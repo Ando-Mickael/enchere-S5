@@ -81,6 +81,11 @@ public class Produit {
                 rs.getString("propietaireid"),
                 rs.getString("categorieid")));
     }
+    
+    public Produit selectById(JdbcTemplate jt) {
+        String query = String.format("select * from Produit where id = '%s' ", getId());
+        return (select(query, jt).get(0));
+    }
 
     public void insert(JdbcTemplate jt) {
         String query = String.format("insert into produit values (concat('Produit',nextval('seq_produit')), '%s', '%s', %s, '%s', '%s')", getNom(), getDescri(), getPrix(), getProprietaireid(), getCategorieid());

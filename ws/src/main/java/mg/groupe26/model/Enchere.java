@@ -10,18 +10,24 @@ public class Enchere {
     String duree;
     Double prixmin;
     Integer status;
-    String produitid;
+    String nomProduit;
+    String descriProduit;
+    String proprietaireId;
+    String categorieId;
 
     public Enchere() {
     }
 
-    public Enchere(String id, String dateDebut, String duree, Double prixmin, Integer status, String produitid) {
+    public Enchere(String id, String dateDebut, String duree, Double prixmin, Integer status, String nomProduit, String descriProduit, String proprietaireId, String categorieId) {
         this.id = id;
         this.dateDebut = dateDebut;
         this.duree = duree;
         this.prixmin = prixmin;
         this.status = status;
-        this.produitid = produitid;
+        this.nomProduit = nomProduit;
+        this.descriProduit = descriProduit;
+        this.proprietaireId = proprietaireId;
+        this.categorieId = categorieId;
     }
 
     public String getId() {
@@ -32,12 +38,36 @@ public class Enchere {
         this.id = id;
     }
 
-    public String getProduitid() {
-        return produitid;
+    public String getNomProduit() {
+        return nomProduit;
     }
 
-    public void setProduitid(String produitid) {
-        this.produitid = produitid;
+    public void setNomProduit(String nomProduit) {
+        this.nomProduit = nomProduit;
+    }
+
+    public String getDescriProduit() {
+        return descriProduit;
+    }
+
+    public void setDescriProduit(String descriProduit) {
+        this.descriProduit = descriProduit;
+    }
+
+    public String getProprietaireId() {
+        return proprietaireId;
+    }
+
+    public void setProprietaireId(String proprietaireId) {
+        this.proprietaireId = proprietaireId;
+    }
+
+    public String getCategorieId() {
+        return categorieId;
+    }
+
+    public void setCategorieId(String categorieId) {
+        this.categorieId = categorieId;
     }
 
     public String getDuree() {
@@ -78,8 +108,11 @@ public class Enchere {
                 rs.getString("datedebut"),
                 rs.getString("duree"),
                 rs.getDouble("prixmin"),
-                rs.getInt("prixmin"),
-                rs.getString("produitid")
+                rs.getInt("status"),
+                rs.getString("nomproduit"),
+                rs.getString("descriproduit"),
+                rs.getString("proprietaireid"),
+                rs.getString("categorieid")
         ));
     }
 
@@ -89,22 +122,22 @@ public class Enchere {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into enchere values (concat('Enchere',nextval('seq_enchere')), '%s', '%s', '%s', %s, '%s')", getProduitid(), getDuree(), getDateDebut(), getPrixmin(), getStatus());
+        String query = String.format("insert into enchere values (concat('Enchere',nextval('seq_enchere')), default, '%s', %s, default, '%s', '%s', '%s', '%s')", getDuree(), getPrixmin(), getNomProduit(), getDescriProduit(), getProprietaireId(), getCategorieId());
         jt.update(query);
     }
 
     public void update(JdbcTemplate j) {
-        String query = String.format("update enchere set produitid='%s',duree='%s',datedebut='%s',prixmin=%s,status=%s where id= %s", getProduitid(), getDuree(), getDateDebut(), getPrixmin(), getStatus(), getId());
+        String query = String.format("update enchere set dateDebut = '%s', duree = '%s', prixMin = %s, status = %s, nomProduit = '%s', descriProduit = '%s', proprietaireId = '%s', categorieId = '%s' where id = '%s' ", getDateDebut(), getDuree(), getPrixmin(), getStatus(), getNomProduit(), getDescriProduit(), getProprietaireId(), getCategorieId(), getId());
         j.update(query);
     }
 
     public void updateStatus(JdbcTemplate j) {
-        String query = String.format("update enchere set status=%s where id='%s'", getStatus(), getId());
+        String query = String.format("update enchere set status = %s where id = '%s' ", getStatus(), getId());
         j.update(query);
     }
 
     public void delete(JdbcTemplate j) {
-        String query = String.format("delete from enchere where id='%s'", getId());
+        String query = String.format("delete from enchere where id = '%s'", getId());
         j.update(query);
     }
 }

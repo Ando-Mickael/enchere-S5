@@ -7,15 +7,15 @@ public class Photo {
 
     String id;
     String image;
-    String produitid;
+    String enchereId;
 
     public Photo() {
     }
 
-    public Photo(String id, String image, String produitid) {
+    public Photo(String id, String image, String enchereId) {
         this.id = id;
         this.image = image;
-        this.produitid = produitid;
+        this.enchereId = enchereId;
     }
 
     public String getId() {
@@ -34,28 +34,28 @@ public class Photo {
         this.image = image;
     }
 
-    public String getProduitid() {
-        return produitid;
+    public String getEnchereId() {
+        return enchereId;
     }
 
-    public void setProduitid(String produitid) {
-        this.produitid = produitid;
+    public void setEnchereId(String enchereId) {
+        this.enchereId = enchereId;
     }
 
     public List<Photo> select(String query, JdbcTemplate jt) {
         return jt.query(query, (rs, row) -> new Photo(
                 rs.getString("id"),
                 rs.getString("image"),
-                rs.getString("produitid")));
+                rs.getString("enchereId")));
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into photo values (concat('Photo',nextval('seq_photo')), '%s','%s')", getImage(), getProduitid());
+        String query = String.format("insert into photo values (concat('Photo',nextval('seq_photo')), '%s', '%s')", getImage(), getEnchereId());
         jt.update(query);
     }
 
     public void update(JdbcTemplate j) {
-        String query = String.format("update photo set image='%s',produitid='%s' where id= '%s'", getImage(), getProduitid(), getId());
+        String query = String.format("update photo set image = '%s', enchereId = '%s' where id = '%s'", getImage(), getEnchereId(), getId());
         j.update(query);
     }
 }

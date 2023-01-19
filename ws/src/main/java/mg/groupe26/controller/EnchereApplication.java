@@ -17,6 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -77,13 +78,16 @@ public class EnchereApplication {
     }
 
 //    enchere
-    @GetMapping("/enchere")
-    public List<Enchere> getEnchere() {
-        return (new Enchere().select("select * from enchere", jdbcTemplate));
+    @GetMapping("/encheres")
+    public List<Enchere> getListEnchere() {
+        return (new Enchere().select("select * from Enchere", jdbcTemplate));
     }
 
     @GetMapping("/addEnchere")
-    public void addEnchere() {
+    public void addEnchere(@RequestParam String duree,
+            @RequestParam double prixMin,
+            @RequestParam int status,
+            @RequestParam String produitId) {
         new Enchere().insert(jdbcTemplate);
     }
 
@@ -93,9 +97,14 @@ public class EnchereApplication {
     }
 
 //    produit
-    @GetMapping("/produit")
+    @GetMapping("/produits")
     public List<Produit> getProduit() {
-        return (new Produit().select("select * from produit", jdbcTemplate));
+        return (new Produit().select("select * from Produit", jdbcTemplate));
+    }
+    
+    @GetMapping("/produits/{id}")
+    public Produit getProduitById(@PathVariable String id) {
+        return (new Produit(id, null, null, null, null, null).selectById(jdbcTemplate));
     }
 
     @GetMapping("/addProduit")
@@ -104,14 +113,25 @@ public class EnchereApplication {
     }
 
 //    rechargeCompte
-    @GetMapping("/rechargecompte")
-    public List<RechargeCompte> getRechargeCompte() {
+    @GetMapping("/rechargeComptes")
+    public List<RechargeCompte> getListRechargeCompte() {
         return (new RechargeCompte().select("select * from rechargecompte", jdbcTemplate));
     }
 
     @GetMapping("/addRechargeCompte")
-    public void addRechargeCompte() {
-        new RechargeCompte().insert(jdbcTemplate);
+    public void addRechargeCompte(@RequestParam double montant,
+            @RequestParam String utilisateurId) {
+        new RechargeCompte(null, utilisateurId, montant, null, null).insert(jdbcTemplate);
+    }
+    
+    @GetMapping("/acceptRechargeCompte/{id}")
+    public void acceptRechargeCompte(@PathVariable String id) {
+        new RechargeCompte(id, null, null, 1, null).update(jdbcTemplate);
+    }
+    
+    @GetMapping("/refuseRechargeCompte/{id}")
+    public void refuseRechargeCompte(@PathVariable String id) {
+        new RechargeCompte(id, null, null, -1, null).update(jdbcTemplate);
     }
 
 //    resultatEnchere

@@ -6,18 +6,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class ResultatEnchere {
 
     String id;
-    String gagnant;
+    Double prixVente;
+    String gagnantId;
     String enchereid;
-    double prixVente;
 
     public ResultatEnchere() {
     }
 
-    public ResultatEnchere(String id, String gagnant, String encherid, double prixVente) {
+    public ResultatEnchere(String id, Double prixVente, String gagnantId, String enchereid) {
         this.id = id;
-        this.gagnant = gagnant;
-        this.enchereid = encherid;
         this.prixVente = prixVente;
+        this.gagnantId = gagnantId;
+        this.enchereid = enchereid;
     }
 
     public String getId() {
@@ -28,12 +28,12 @@ public class ResultatEnchere {
         this.id = id;
     }
 
-    public String getGagnant() {
-        return gagnant;
+    public String getGagnantId() {
+        return gagnantId;
     }
 
-    public void setGagnant(String gagnant) {
-        this.gagnant = gagnant;
+    public void setGagnantId(String gagnantId) {
+        this.gagnantId = gagnantId;
     }
 
     public String getEnchereid() {
@@ -44,33 +44,35 @@ public class ResultatEnchere {
         this.enchereid = enchereid;
     }
 
-    public double getPrixVente() {
+    public Double getPrixVente() {
         return prixVente;
     }
 
-    public void setPrixVente(double prixVente) {
+    public void setPrixVente(Double prixVente) {
         this.prixVente = prixVente;
     }
 
     public List<ResultatEnchere> select(String query, JdbcTemplate jt) {
-        return jt.query(query, (rs, row) -> new ResultatEnchere(rs.getString("id"),
-                rs.getString("gagnant"),
-                rs.getString("enchereid"),
-                rs.getDouble("prixvente")));
+        return jt.query(query, (rs, row) -> new ResultatEnchere(
+                rs.getString("id"),
+                rs.getDouble("prixvente"),
+                rs.getString("gagnantId"),
+                rs.getString("enchereid")
+        ));
     }
 
     public List<ResultatEnchere> selectAll(JdbcTemplate jt) {
-        String query = "select * from v_resultatEnchere";
+        String query = "select * from resultatEnchere";
         return (select(query, jt));
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into resultatenchere values (concat('ResutlatEnchere',nextval('seq_resultatenchere')), '%s', '%s', %s)", getGagnant(), getEnchereid(), getPrixVente());
+        String query = String.format("insert into resultatenchere values (concat('ResutlatEnchere', nextval('seq_resultatenchere')), %s, '%s', '%s')", getPrixVente(), getGagnantId(), getEnchereid());
         jt.update(query);
     }
 
     public void update(JdbcTemplate j) {
-        String query = String.format("update resultatcompte set gagnant='%s',enchereid='%s' prixvente=%s where id= '%s'", getGagnant(), getEnchereid(), getPrixVente(), getId());
+        String query = String.format("update resultatcompte set gagnantId = '%s', enchereid = '%s' prixvente = %s where id= '%s'", getGagnantId(), getEnchereid(), getPrixVente(), getId());
         j.update(query);
     }
 }

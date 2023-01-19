@@ -38,6 +38,11 @@ public class Config {
                 rs.getString("valeur")
         ));
     }
+    
+    public Config selectByCle(JdbcTemplate jt) {
+        String query = String.format("select * from Config where cle = ", getCle());
+        return (select(query, jt).get(0));
+    }
 
     public void insert(JdbcTemplate jt) {
         String query = String.format("insert into admin values ('%s', '%s')", getCle(), getValeur());
@@ -45,7 +50,7 @@ public class Config {
     }
 
     public void update(JdbcTemplate j) {
-        String query = String.format("update config set valeur=%s where cle= '%s'", getValeur(), getCle());
+        String query = String.format("update config set valeur = '%s' where cle = '%s' ", getValeur(), getCle());
         j.update(query);
     }
 }

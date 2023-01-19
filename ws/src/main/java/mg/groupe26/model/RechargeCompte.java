@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class RechargeCompte {
 
     String id;
-    String utilisateurid;
+    String utilisateurId;
     Double montant;
     Integer estValide;
     String dateDemande;
@@ -14,9 +14,9 @@ public class RechargeCompte {
     public RechargeCompte() {
     }
 
-    public RechargeCompte(String id, String utilisateurid, Double montant, Integer estValide, String dateDemande) {
+    public RechargeCompte(String id, String utilisateurId, Double montant, Integer estValide, String dateDemande) {
         this.id = id;
-        this.utilisateurid = utilisateurid;
+        this.utilisateurId = utilisateurId;
         this.montant = montant;
         this.estValide = estValide;
         this.dateDemande = dateDemande;
@@ -30,12 +30,12 @@ public class RechargeCompte {
         this.id = id;
     }
 
-    public String getUtilisateurid() {
-        return utilisateurid;
+    public String getUtilisateurId() {
+        return utilisateurId;
     }
 
-    public void setUtilisateurid(String utilisateurid) {
-        this.utilisateurid = utilisateurid;
+    public void setUtilisateurId(String utilisateurId) {
+        this.utilisateurId = utilisateurId;
     }
 
     public Double getMontant() {
@@ -64,7 +64,7 @@ public class RechargeCompte {
 
     public List<RechargeCompte> select(String query, JdbcTemplate jt) {
         return jt.query(query, (rs, row) -> new RechargeCompte(rs.getString("id"),
-                rs.getString("utilisateurid"),
+                rs.getString("utilisateurId"),
                 rs.getDouble("montant"),
                 rs.getInt("estValide"),
                 rs.getString("datedemande")
@@ -77,12 +77,12 @@ public class RechargeCompte {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into rechargecompte values (concat('RechargeCompte',nextval('seq_rechargecompte')), '%s', %s, %s, default)", getUtilisateurid(), getMontant(), getEstValide());
+        String query = String.format("insert into rechargecompte values (concat('RechargeCompte',nextval('seq_rechargecompte')), %s, default, %s, default)", getMontant(), getEstValide(), getUtilisateurId());
         jt.update(query);
     }
 
     public void update(JdbcTemplate j) {
-        String query = String.format("update rechargecompte set utilisateurid='%s',montant=%s,estvalide=%s where id= '%s'", getUtilisateurid(), getMontant(), getEstValide(), getId());
+        String query = String.format("update rechargecompte set estValide = %s where id= '%s'", getEstValide(), getId());
         j.update(query);
     }
 }
