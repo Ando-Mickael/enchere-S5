@@ -43,7 +43,6 @@ public class Utilisateur extends Personne {
         this.id = id;
     }
 
-
     public List<Utilisateur> select(String query, JdbcTemplate jt) {
         return jt.query(query, (rs, row) -> new Utilisateur(
                 rs.getString("id"),
@@ -57,6 +56,7 @@ public class Utilisateur extends Personne {
     public Utilisateur login(JdbcTemplate jt) {
         Utilisateur result = null;
         String query = String.format("select * from Utilisateur where email = '%s' and mdp = '%s' ", getEmail(), getMdp());
+        System.out.println(query);
         List<Utilisateur> listUtilisateur = select(query, jt);
         
         if (!listUtilisateur.isEmpty()) {
@@ -68,7 +68,7 @@ public class Utilisateur extends Personne {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into Utilisateur values (concat('Utilisateur',nextval('seq_utilisateur'), '%s','%s','%s')", getNom(), getPseudo(), getEmail(), getMdp());
+        String query = String.format("insert into Utilisateur values (concat('Utilisateur',nextval('seq_utilisateur')), '%s', '%s', '%s', '%s')", getNom(), getPseudo(), getEmail(), getMdp());
         jt.update(query);
     }
 

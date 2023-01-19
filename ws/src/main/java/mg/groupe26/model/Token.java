@@ -61,7 +61,7 @@ public class Token {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into token values (concat('Token',nextval('seq_token'), '%s', default, '%s')", getContenu(), getUtilisateurid());
+        String query = String.format("insert into token values (concat('Token',nextval('seq_token')), '%s', default, '%s')", getContenu(), getUtilisateurid());
         jt.update(query);
     }
 

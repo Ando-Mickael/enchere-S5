@@ -89,7 +89,7 @@ public class Enchere {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into enchere values (concat('Enchere',nextval('seq_enchere'), '%s', '%s', '%s', %s, '%s')", getProduitid(), getDuree(), getDateDebut(), getPrixmin(), getStatus());
+        String query = String.format("insert into enchere values (concat('Enchere',nextval('seq_enchere')), '%s', '%s', '%s', %s, '%s')", getProduitid(), getDuree(), getDateDebut(), getPrixmin(), getStatus());
         jt.update(query);
     }
 

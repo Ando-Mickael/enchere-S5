@@ -5,7 +5,6 @@ import mg.groupe26.model.Admin;
 import mg.groupe26.model.Categorie;
 import mg.groupe26.model.Config;
 import mg.groupe26.model.Enchere;
-import mg.groupe26.model.Personne;
 import mg.groupe26.model.Photo;
 import mg.groupe26.model.Produit;
 import mg.groupe26.model.RechargeCompte;
@@ -18,7 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -41,30 +40,40 @@ public class EnchereApplication {
 
 //    utilisateur
     @GetMapping("/utilisateurs")
-    public List<Utilisateur> geUtlisateur() {
+    public List<Utilisateur> getListUtlisateur() {
         return (new Utilisateur().select("select * from Utilisateur", jdbcTemplate));
     }
 
     @GetMapping("/loginUtilisateur")
-    public Utilisateur loginUtilisateur(@RequestAttribute String email, @RequestAttribute String mdp) {
-        return (new Utilisateur(null, null, null, email, mdp));
+    public Utilisateur loginUtilisateur(@RequestParam String email,
+            @RequestParam String mdp) {
+        return (new Utilisateur(null, null, null, email, mdp).login(jdbcTemplate));
+    }
+    
+    @GetMapping("/inscription")
+    public void addUtilisateur(@RequestParam String nom,
+            @RequestParam String pseudo,
+            @RequestParam String email,
+            @RequestParam String mdp) {
+        new Utilisateur(null, nom, pseudo, email, mdp).insert(jdbcTemplate);
     }
 
 //    admin
     @GetMapping("/admins")
-    public List<Admin> getAdmin() {
+    public List<Admin> getListAdmin() {
         return (new Admin().select("select * from Admin", jdbcTemplate));
     }
 
     @GetMapping("/loginAdmin")
-    public Admin loginAdmin(@RequestAttribute String email,
-            @RequestAttribute String mdp) {
+    public Admin loginAdmin(@RequestParam String email,
+            @RequestParam String mdp) {
         return (new Admin(null, email, mdp).login(jdbcTemplate));
     }
 
     @GetMapping("/addAdmin")
-    public void addAdmin() {
-        new Admin().insert(jdbcTemplate);
+    public void addAdmin(@RequestParam String email,
+            @RequestParam String mdp) {
+        new Admin(null, email, mdp).insert(jdbcTemplate);
     }
 
 //    enchere

@@ -40,7 +40,7 @@ public class Categorie {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into admin values (concat('Categorie',nextval('seq_categorie'), '%s')", getIntitule());
+        String query = String.format("insert into admin values (concat('Categorie',nextval('seq_categorie')), '%s')", getIntitule());
         jt.update(query);
     }
 

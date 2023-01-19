@@ -65,7 +65,7 @@ public class ResultatEnchere {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into resultatenchere values (concat('RESULTATENCHERE',nextval('id_resultatenchere'), '%s', '%s', %s)", getGagnant(), getEnchereid(), getPrixVente());
+        String query = String.format("insert into resultatenchere values (concat('ResutlatEnchere',nextval('seq_resultatenchere')), '%s', '%s', %s)", getGagnant(), getEnchereid(), getPrixVente());
         jt.update(query);
     }
 

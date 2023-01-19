@@ -44,7 +44,7 @@ public class Admin extends Personne {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into Admin values (concat('Admin',nextval('seq_admin'), '%s', '%s')", getEmail(), getMdp());
+        String query = String.format("insert into Admin values (concat('Admin',nextval('seq_admin')), '%s', '%s')", getEmail(), getMdp());
         jt.update(query);
     }
 }

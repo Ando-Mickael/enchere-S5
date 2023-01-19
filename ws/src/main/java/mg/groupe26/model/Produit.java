@@ -83,7 +83,7 @@ public class Produit {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into produit values (concat('Produit',nextval('seq_produit'), '%s', '%s', %s, '%s', '%s')", getNom(), getDescri(), getPrix(), getProprietaireid(), getCategorieid());
+        String query = String.format("insert into produit values (concat('Produit',nextval('seq_produit')), '%s', '%s', %s, '%s', '%s')", getNom(), getDescri(), getPrix(), getProprietaireid(), getCategorieid());
         jt.update(query);
     }
 

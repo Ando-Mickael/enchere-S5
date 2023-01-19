@@ -50,7 +50,7 @@ public class Photo {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into photo values (concat('Photo',nextval('seq_photo'), '%s','%s')", getImage(), getProduitid());
+        String query = String.format("insert into photo values (concat('Photo',nextval('seq_photo')), '%s','%s')", getImage(), getProduitid());
         jt.update(query);
     }
 

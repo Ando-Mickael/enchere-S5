@@ -57,6 +57,7 @@ CREATE TABLE RechargeCompte (
   montant float4,
   estValide int4 default 0,
   Utilisateurid varchar(255) NOT NULL,
+  dateDemande timestamp default now(),
   PRIMARY KEY (id)
 );
 
