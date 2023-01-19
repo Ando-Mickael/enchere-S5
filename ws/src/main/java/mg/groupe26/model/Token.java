@@ -7,16 +7,16 @@ public class Token {
 
     String id;
     String contenu;
-    String dateCreation;
+    String dateExpiration;
     String utilisateurid;
 
     public Token() {
     }
 
-    public Token(String id, String contenu, String dateCreation, String utilisateurid) {
+    public Token(String id, String contenu, String dateExpiration, String utilisateurid) {
         this.id = id;
         this.contenu = contenu;
-        this.dateCreation = dateCreation;
+        this.dateExpiration = dateExpiration;
         this.utilisateurid = utilisateurid;
     }
 
@@ -44,19 +44,19 @@ public class Token {
         this.utilisateurid = utilisateurid;
     }
 
-    public String getDateCreation() {
-        return dateCreation;
+    public String getDateExpiration() {
+        return dateExpiration;
     }
 
-    public void setDateCreation(String dateCreation) {
-        this.dateCreation = dateCreation;
+    public void setDateExpiration(String dateExpiration) {
+        this.dateExpiration = dateExpiration;
     }
 
     public List<Token> select(String query, JdbcTemplate jt) {
         return jt.query(query, (rs, row) -> new Token(
                 rs.getString("id"),
                 rs.getString("contenu"),
-                rs.getString("datecreation"),
+                rs.getString("dateexpiration"),
                 rs.getString("utililisateurid")));
     }
 

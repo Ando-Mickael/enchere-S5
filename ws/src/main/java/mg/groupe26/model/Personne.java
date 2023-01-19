@@ -1,29 +1,21 @@
 package mg.groupe26.model;
 
-import java.util.List;
-import org.springframework.jdbc.core.JdbcTemplate;
+import java.time.LocalDateTime;
+import mg.groupe26.util.Utilities;
 
 public class Personne {
 
-    String id;
     String email;
     String mdp;
+
+    String token;
 
     public Personne() {
     }
 
-    public Personne(String id, String email, String mdp) {
-        this.id = id;
+    public Personne(String email, String mdp) {
         this.email = email;
         this.mdp = mdp;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getEmail() {
@@ -42,20 +34,16 @@ public class Personne {
         this.mdp = mdp;
     }
 
-    public List<Personne> select(String query, JdbcTemplate jt) {
-        return jt.query(query, (rs, row) -> new Personne(
-                rs.getString("id"),
-                rs.getString("email"),
-                rs.getString("mdp")));
+    public String getToken() {
+        return token;
     }
 
-    public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into personne values (concat('Personne',nextval('seq_personne'), '%s', '%s')", getEmail(), getMdp());
-        jt.update(query);
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    public void update(JdbcTemplate j) {
-        String query = String.format("update personne set email='%s',mdp='%s' where id= '%s'", getEmail(), getMdp(), getId());
-        j.update(query);
+    public void generateToken() {
+        LocalDateTime dateTime = LocalDateTime.now();
+        setToken(Utilities.generateHash(dateTime + getEmail()));
     }
 }

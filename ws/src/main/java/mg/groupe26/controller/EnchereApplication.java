@@ -18,6 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -38,66 +39,38 @@ public class EnchereApplication {
         return ("Hello !");
     }
 
-//    select
-    @GetMapping("/admin")
-    public List<Admin> getAdmin() {
-        return (new Admin().select("select * from admin", jdbcTemplate));
-    }
-
-    @GetMapping("/enchere")
-    public List<Enchere> getEnchere() {
-        return (new Enchere().select("select * from enchere", jdbcTemplate));
-    }
-
-    @GetMapping("/produit")
-    public List<Produit> getProduit() {
-        return (new Produit().select("select * from produit", jdbcTemplate));
-    }
-
-    @GetMapping("/rechargecompte")
-    public List<RechargeCompte> getRechargeCompte() {
-        return (new RechargeCompte().select("select * from rechargecompte", jdbcTemplate));
-    }
-
-    @GetMapping("/resultatenchere")
-    public List<ResultatEnchere> getResultatEnchere() {
-        return (new ResultatEnchere().select("select * from resultatenchere", jdbcTemplate));
-    }
-
-    @GetMapping("/personne")
-    public List<Personne> getPersonne() {
-        return (new Personne().select("select * from personne", jdbcTemplate));
-    }
-
-    @GetMapping("/photo")
-    public List<Photo> getPhoto() {
-        return (new Photo().select("select * from photo", jdbcTemplate));
-    }
-
-    @GetMapping("/personne")
+//    utilisateur
+    @GetMapping("/utilisateurs")
     public List<Utilisateur> geUtlisateur() {
-        return (new Utilisateur().select("select * from utilisateur", jdbcTemplate));
+        return (new Utilisateur().select("select * from Utilisateur", jdbcTemplate));
     }
 
-    @GetMapping("/categorie")
-    public List<Categorie> getCategorie() {
-        return (new Categorie().select("select * from categorie", jdbcTemplate));
+    @GetMapping("/loginUtilisateur")
+    public Utilisateur loginUtilisateur(@RequestAttribute String email, @RequestAttribute String mdp) {
+        return (new Utilisateur(null, null, null, email, mdp));
     }
 
-//    insert
+//    admin
+    @GetMapping("/admins")
+    public List<Admin> getAdmin() {
+        return (new Admin().select("select * from Admin", jdbcTemplate));
+    }
+
+    @GetMapping("/loginAdmin")
+    public Admin loginAdmin(@RequestAttribute String email,
+            @RequestAttribute String mdp) {
+        return (new Admin(null, email, mdp).login(jdbcTemplate));
+    }
+
     @GetMapping("/addAdmin")
     public void addAdmin() {
         new Admin().insert(jdbcTemplate);
     }
 
-    @GetMapping("/addCategorie")
-    public void addCategorie() {
-        new Categorie().insert(jdbcTemplate);
-    }
-
-    @GetMapping("/addConfig")
-    public void addConfig() {
-        new Config().insert(jdbcTemplate);
+//    enchere
+    @GetMapping("/enchere")
+    public List<Enchere> getEnchere() {
+        return (new Enchere().select("select * from enchere", jdbcTemplate));
     }
 
     @GetMapping("/addEnchere")
@@ -105,14 +78,15 @@ public class EnchereApplication {
         new Enchere().insert(jdbcTemplate);
     }
 
-    @GetMapping("/addPersonne")
-    public void addPersonne() {
-        new Personne().insert(jdbcTemplate);
+    @GetMapping("/updateEnchere")
+    public void updateEnchere() {
+        new Enchere().update(jdbcTemplate);
     }
 
-    @GetMapping("/addPhoto")
-    public void addPhoto() {
-        new Photo().insert(jdbcTemplate);
+//    produit
+    @GetMapping("/produit")
+    public List<Produit> getProduit() {
+        return (new Produit().select("select * from produit", jdbcTemplate));
     }
 
     @GetMapping("/addProduit")
@@ -120,9 +94,21 @@ public class EnchereApplication {
         new Produit().insert(jdbcTemplate);
     }
 
+//    rechargeCompte
+    @GetMapping("/rechargecompte")
+    public List<RechargeCompte> getRechargeCompte() {
+        return (new RechargeCompte().select("select * from rechargecompte", jdbcTemplate));
+    }
+
     @GetMapping("/addRechargeCompte")
     public void addRechargeCompte() {
         new RechargeCompte().insert(jdbcTemplate);
+    }
+
+//    resultatEnchere
+    @GetMapping("/resultatenchere")
+    public List<ResultatEnchere> getResultatEnchere() {
+        return (new ResultatEnchere().select("select * from resultatenchere", jdbcTemplate));
     }
 
     @GetMapping("/addResultatEnchere")
@@ -130,13 +116,38 @@ public class EnchereApplication {
         new ResultatEnchere().insert(jdbcTemplate);
     }
 
+//    photo
+    @GetMapping("/photo")
+    public List<Photo> getPhoto() {
+        return (new Photo().select("select * from photo", jdbcTemplate));
+    }
+
+    @GetMapping("/addPhoto")
+    public void addPhoto() {
+        new Photo().insert(jdbcTemplate);
+    }
+
+//    categorie
+    @GetMapping("/categorie")
+    public List<Categorie> getCategorie() {
+        return (new Categorie().select("select * from categorie", jdbcTemplate));
+    }
+
+    @GetMapping("/addCategorie")
+    public void addCategorie() {
+        new Categorie().insert(jdbcTemplate);
+    }
+
+//    config
+    @GetMapping("/addConfig")
+    public void addConfig() {
+        new Config().insert(jdbcTemplate);
+    }
+
+//    token
     @GetMapping("/addToken")
     public void addToken() {
         new Token().insert(jdbcTemplate);
     }
 
-    @GetMapping("/updateEnchere")
-    public void updateEnchere() {
-        new Enchere().update(jdbcTemplate);
-    }
 }

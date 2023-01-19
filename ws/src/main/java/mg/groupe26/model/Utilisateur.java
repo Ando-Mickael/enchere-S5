@@ -1,22 +1,20 @@
 package mg.groupe26.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public class Utilisateur {
+public class Utilisateur extends Personne {
 
     String id;
-    String personneid;
     String nom;
     String pseudo;
 
     public Utilisateur() {
     }
 
-    public Utilisateur(String id, String personneid, String nom, String pseudo) {
+    public Utilisateur(String id, String nom, String pseudo, String email, String mdp) {
+        super(email, mdp);
         this.id = id;
-        this.personneid = personneid;
         this.nom = nom;
         this.pseudo = pseudo;
     }
@@ -45,29 +43,37 @@ public class Utilisateur {
         this.id = id;
     }
 
-    public String getPersonneid() {
-        return personneid;
-    }
-
-    public void setPersonneid(String personneid) {
-        this.personneid = personneid;
-    }
 
     public List<Utilisateur> select(String query, JdbcTemplate jt) {
         return jt.query(query, (rs, row) -> new Utilisateur(
                 rs.getString("id"),
-                rs.getString("personneid"),
                 rs.getString("nom"),
-                rs.getString("pseudo")));
+                rs.getString("pseudo"),
+                rs.getString("email"),
+                rs.getString("mdp")
+        ));
+    }
+    
+    public Utilisateur login(JdbcTemplate jt) {
+        Utilisateur result = null;
+        String query = String.format("select * from Utilisateur where email = '%s' and mdp = '%s' ", getEmail(), getMdp());
+        List<Utilisateur> listUtilisateur = select(query, jt);
+        
+        if (!listUtilisateur.isEmpty()) {
+            result = listUtilisateur.get(0);
+            result.generateToken();
+        }
+        
+        return result;
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into Utilisateur values (concat('Utilisateur',nextval('seq_utilisateur'), '%s','%s','%s')", getPersonneid(), getNom(), getPseudo());
+        String query = String.format("insert into Utilisateur values (concat('Utilisateur',nextval('seq_utilisateur'), '%s','%s','%s')", getNom(), getPseudo(), getEmail(), getMdp());
         jt.update(query);
     }
 
     public void update(JdbcTemplate j) {
-        String query = String.format("update utilisateur set personneid='%s',nom='%s',pseudo='%s' where id= '%s'", getPersonneid(), getNom(), getPseudo(), getId());
+        String query = String.format("update utilisateur set nom='%s', pseudo='%s', email='%s', mdp='%s' where id= '%s'", getNom(), getPseudo(), getId(), getEmail(), getMdp());
         j.update(query);
     }
 }

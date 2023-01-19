@@ -3,17 +3,16 @@ package mg.groupe26.model;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public class Admin {
+public class Admin extends Personne {
 
     String id;
-    String personneid;
 
     public Admin() {
     }
 
-    public Admin(String id, String personneid) {
+    public Admin(String id, String email, String mdp) {
+        super(email, mdp);
         this.id = id;
-        this.personneid = personneid;
     }
 
     public String getId() {
@@ -24,20 +23,28 @@ public class Admin {
         this.id = id;
     }
 
-    public String getPersonneid() {
-        return personneid;
-    }
-
-    public void setPersonneid(String personneid) {
-        this.personneid = personneid;
-    }
-
     public List<Admin> select(String query, JdbcTemplate jt) {
-        return jt.query(query, (rs, row) -> new Admin(rs.getString("id"), rs.getString("personneid")));
+        return jt.query(query, (rs, row) -> new Admin(
+                rs.getString("id"),
+                rs.getString("email"),
+                rs.getString("mdp")
+        ));
+    }
+    
+    public Admin login(JdbcTemplate jt) {
+        Admin result = null;
+        String query = String.format("select * from Admin where email = '%s' and mdp = '%s' ", getEmail(), getMdp());
+        List<Admin> listAdmin = select(query, jt);
+        
+        if (!listAdmin.isEmpty()) {
+            result = listAdmin.get(0);
+        }
+        
+        return result;
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into admin values (concat('Admin',nextval('seq_admin'), '%s')", getPersonneid());
+        String query = String.format("insert into Admin values (concat('Admin',nextval('seq_admin'), '%s', '%s')", getEmail(), getMdp());
         jt.update(query);
     }
 }
