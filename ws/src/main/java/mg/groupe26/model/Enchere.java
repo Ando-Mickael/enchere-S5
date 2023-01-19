@@ -1,43 +1,29 @@
 package mg.groupe26.model;
 
 import java.util.List;
-import org.springframework.jdbc.corJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 public class Enchere {
 
     String id;
-    String produitid;
-    String duree;
     String dateDebut;
-    double prixmin;
+    String duree;
+    Double prixmin;
     Integer status;
-
-    public void update(JdbcTemplate j){
-        String query = String.format("update enchere set produitid='%s',duree='%s',datedebut='%s',prixmin=%s,status=%s where id= %s",getPersonneid(),getDateDebut(),getDateDebut(),getPrixmin(),getStatus());
-        j.update(query);
-    }
-    public void updatestatus(JdbcTemplate j){
-        String query = String.format("update enchere set status=%s where id='%s'",getStatus(),getID());
-        j.update(query);
-    }
-    public void delete(JdbcTemplate j){
-        String query = String.format("delete from enchere where id='%s'",getID());
-        j.update(query);
-    }
+    String produitid;
 
     public Enchere() {
     }
 
-    public Enchere(String id, String produitid, String utilisateur, String duree,String dateDebut, double prixmin,Integer status) {
+    public Enchere(String id, String dateDebut, String duree, Double prixmin, Integer status, String produitid) {
         this.id = id;
-        this.produitid = produitid;
-        this.duree = duree;
         this.dateDebut = dateDebut;
+        this.duree = duree;
         this.prixmin = prixmin;
         this.status = status;
+        this.produitid = produitid;
     }
 
-    
     public String getId() {
         return id;
     }
@@ -70,35 +56,55 @@ public class Enchere {
         this.dateDebut = dateDebut;
     }
 
-    public double getPrixmin() {
+    public Double getPrixmin() {
         return prixmin;
     }
 
-    public void setPrixmin(double prixmin) {
+    public void setPrixmin(Double prixmin) {
         this.prixmin = prixmin;
     }
-    public Integer getStatus(){
+
+    public Integer getStatus() {
         return status;
     }
-    public void setStatus(Integer status){
+
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
     public List<Enchere> select(String query, JdbcTemplate jt) {
-        return jt.query(query, (rs, row) -> new Enchere(rs.getString("id"),
-                rs.getString("produitid"),
-                rs.getString("duree"),
+        return jt.query(query, (rs, row) -> new Enchere(
+                rs.getString("id"),
                 rs.getString("datedebut"),
-                rs.getFloat("prixmin")));
+                rs.getString("duree"),
+                rs.getDouble("prixmin"),
+                rs.getInt("prixmin"),
+                rs.getString("produitid")
+        ));
     }
 
     public List<Enchere> selectAll(JdbcTemplate jt) {
-        String query = "select * from v_enchere";
+        String query = "select * from Enchere";
         return (select(query, jt));
     }
-    
-        public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into enchere values (concat('ENCHERE',nextval('id_enchere'), '%s', '%s', '%s', %s, '%s')", getProduitid(), getDuree(), getDateDebut(), getPrixmin(),getStatus());
+
+    public void insert(JdbcTemplate jt) {
+        String query = String.format("insert into enchere values (concat('Enchere',nextval('seq_enchere'), '%s', '%s', '%s', %s, '%s')", getProduitid(), getDuree(), getDateDebut(), getPrixmin(), getStatus());
         jt.update(query);
+    }
+
+    public void update(JdbcTemplate j) {
+        String query = String.format("update enchere set produitid='%s',duree='%s',datedebut='%s',prixmin=%s,status=%s where id= %s", getProduitid(), getDuree(), getDateDebut(), getPrixmin(), getStatus(), getId());
+        j.update(query);
+    }
+
+    public void updateStatus(JdbcTemplate j) {
+        String query = String.format("update enchere set status=%s where id='%s'", getStatus(), getId());
+        j.update(query);
+    }
+
+    public void delete(JdbcTemplate j) {
+        String query = String.format("delete from enchere where id='%s'", getId());
+        j.update(query);
     }
 }

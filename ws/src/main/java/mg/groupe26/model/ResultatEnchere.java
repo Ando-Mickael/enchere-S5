@@ -10,13 +10,7 @@ public class ResultatEnchere {
     String enchereid;
     double prixVente;
 
-    public void update(JdbcTemplate j){
-        String query = String.format("update resultatcompte set gagnant='%s',enchereid='%s' prixvente=%s where id= '%s'",getGagnant(),getEnchereid(),getPrixVente(),getID());
-        j.update();
-    }
-
     public ResultatEnchere() {
-
     }
 
     public ResultatEnchere(String id, String gagnant, String encherid, double prixVente) {
@@ -46,8 +40,8 @@ public class ResultatEnchere {
         return enchereid;
     }
 
-    public void setEnchereid(String encherid) {
-        this.encherid = enchereid;
+    public void setEnchereid(String enchereid) {
+        this.enchereid = enchereid;
     }
 
     public double getPrixVente() {
@@ -71,7 +65,12 @@ public class ResultatEnchere {
     }
 
     public void insert(JdbcTemplate jt) {
-        String query = String.format("insert into resultatenchere values (concat('RESULTATENCHERE',nextval('id_resultatenchere'), '%s', '%s', %s)", getgagnant(), getEnchereid(), getPrixVente());
+        String query = String.format("insert into resultatenchere values (concat('RESULTATENCHERE',nextval('id_resultatenchere'), '%s', '%s', %s)", getGagnant(), getEnchereid(), getPrixVente());
         jt.update(query);
+    }
+
+    public void update(JdbcTemplate j) {
+        String query = String.format("update resultatcompte set gagnant='%s',enchereid='%s' prixvente=%s where id= '%s'", getGagnant(), getEnchereid(), getPrixVente(), getId());
+        j.update(query);
     }
 }
