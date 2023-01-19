@@ -1,6 +1,7 @@
 CREATE TABLE Admin (
   id varchar(255) NOT NULL,
-  Personneid varchar(255) NOT NULL,
+  email varchar(255) NOT NULL UNIQUE,
+  mdp varchar(255) NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -34,13 +35,6 @@ CREATE TABLE Historique (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Personne (
-  id varchar(255) NOT NULL,
-  email varchar(255) NOT NULL UNIQUE,
-  mdp varchar(255) NOT NULL,
-  PRIMARY KEY (id)
-);
-
 CREATE TABLE Photo (
   id varchar(255) NOT NULL,
   image varchar(255),
@@ -54,7 +48,7 @@ CREATE TABLE Produit (
   descri text,
   prix float4,
   ProprietaireId varchar(255) NOT NULL,
-  Categorieid varchar(255) NOT NULL,
+  CategorieId varchar(255) NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -77,7 +71,7 @@ CREATE TABLE ResultatEnchere (
 CREATE TABLE Token (
   id varchar(255) NOT NULL,
   contenu varchar(255) NOT NULL UNIQUE,
-  dateCreation timestamp default now(),
+  dateExpiration timestamp default now() + interval '10 minutes',
   Utilisateurid varchar(255) NOT NULL,
   PRIMARY KEY (id)
 );
@@ -86,19 +80,10 @@ CREATE TABLE Utilisateur (
   id varchar(255) NOT NULL,
   nom varchar(255) NOT NULL,
   pseudo varchar(255) NOT NULL UNIQUE,
-  Personneid varchar(255) NOT NULL,
+  email varchar(255) NOT NULL UNIQUE,
+  mdp varchar(255) NOT NULL,
   PRIMARY KEY (id)
 );
-
-ALTER TABLE
-  Admin
-ADD
-  FOREIGN KEY (Personneid) REFERENCES Personne (id);
-
-ALTER TABLE
-  Utilisateur
-ADD
-  FOREIGN KEY (Personneid) REFERENCES Personne (id);
 
 ALTER TABLE
   ResultatEnchere
@@ -128,7 +113,7 @@ ADD
 ALTER TABLE
   Produit
 ADD
-  FOREIGN KEY (Categorieid) REFERENCES Categorie (id);
+  FOREIGN KEY (CategorieId) REFERENCES Categorie (id);
 
 ALTER TABLE
   Historique

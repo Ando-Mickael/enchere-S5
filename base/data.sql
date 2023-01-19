@@ -1,5 +1,3 @@
-create sequence seq_Personne;
-
 create sequence seq_Admin;
 
 create sequence seq_Utilisateur;
@@ -19,40 +17,12 @@ create SEQUENCE seq_Token;
 create SEQUENCE seq_ResultatEnchere;
 
 insert into
-    Personne
-values
-    (
-        CONCAT('Personne', nextval('seq_Personne')),
-        'admin@gmail.com',
-        'admin'
-    ),
-    (
-        CONCAT('Personne', nextval('seq_Personne')),
-        'koto@gmail.com',
-        '2222'
-    ),
-    (
-        CONCAT('Personne', nextval('seq_Personne')),
-        'bao@gmail.com',
-        '3333'
-    ),
-    (
-        CONCAT('Personne', nextval('seq_Personne')),
-        'lova@gmail.com',
-        '4444'
-    ),
-    (
-        CONCAT('Personne', nextval('seq_Personne')),
-        'raozy@gmail.com',
-        '5555'
-    );
-
-insert into
-    Admin(id, Personneid)
+    Admin
 values
     (
         CONCAT('Admin', nextval('seq_Admin')),
-        'Personne1'
+        'admin@gmail.com',
+        'admin'
     );
 
 insert into
@@ -62,25 +32,29 @@ values
         CONCAT('Utilisateur', nextval('seq_Utilisateur')),
         'Martin',
         'Martin',
-        'Personne2'
+        'koto@gmail.com',
+        '2222'
     ),
     (
         CONCAT('Utilisateur', nextval('seq_Utilisateur')),
         'Koto',
         'Koto',
-        'Personne3'
+        'bao@gmail.com',
+        '3333'
     ),
     (
         CONCAT('Utilisateur', nextval('seq_Utilisateur')),
         'Bob',
         'Bob',
-        'Personne4'
+        'lova@gmail.com',
+        '4444'
     ),
     (
         CONCAT('Utilisateur', nextval('seq_Utilisateur')),
         'Raozy',
         'raozy',
-        'Personne5'
+        'raozy@gmail.com',
+        '5555'
     );
 
 insert into
@@ -111,7 +85,7 @@ values
         'Tableau',
         'objet de valeur',
         100000,
-        'Utilisateur2',
+        'Utilisateur1',
         'Categorie1'
     ),
     (
@@ -143,7 +117,7 @@ values
         'Batterie',
         'neuve 80A',
         20000,
-        'Utilisateur3',
+        'Utilisateur1',
         'Categorie3'
     );
 
@@ -251,5 +225,4 @@ values
 insert into
     Config
 values
-    ('tauxCommission', '10'),
-    ('tokenValid', '10');
+    ('tauxCommission', '10');
