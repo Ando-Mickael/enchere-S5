@@ -1,0 +1,367 @@
+{
+	"info": {
+		"_postman_id": "86e8beb1-b887-4076-bcba-02cdfe9effc4",
+		"name": "enchere",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "hello",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.app/hello",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login utilisateur",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.app/loginUtilisateur?email=ando@gmail.com&mdp=ando",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"loginUtilisateur"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "ando@gmail.com"
+						},
+						{
+							"key": "mdp",
+							"value": "ando"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login admin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.apploginAdmin?email=admin@gmail.com&mdp=admin",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"apploginAdmin"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "admin@gmail.com"
+						},
+						{
+							"key": "mdp",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "inscription",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.app/inscription?nom=Ando&pseudo=ando__mickael&email=ando@gmail.com&mdp=ando",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"inscription"
+					],
+					"query": [
+						{
+							"key": "nom",
+							"value": "Ando"
+						},
+						{
+							"key": "pseudo",
+							"value": "ando__mickael"
+						},
+						{
+							"key": "email",
+							"value": "ando@gmail.com"
+						},
+						{
+							"key": "mdp",
+							"value": "ando"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "liste utilisateurs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.app/utilisateurs",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"utilisateurs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "liste admins",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.app/admins",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"admins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "liste encheres",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.app/encheres",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"encheres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "liste rechargeCompte",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.app/rechargeComptes",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"rechargeComptes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "liste categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.app/categories",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "enchere by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.app/encheres/Enchere1",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"encheres",
+						"Enchere1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "stat",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.app/stat",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"stat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update Enchere",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.app/updateEnchere?id=Enchere1&duree=01:50:00&prixmin=50000&status=1&nomProduit=Jambon&descriProduit=gens bons",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"updateEnchere"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "Enchere1"
+						},
+						{
+							"key": "duree",
+							"value": "01:50:00"
+						},
+						{
+							"key": "prixmin",
+							"value": "50000"
+						},
+						{
+							"key": "status",
+							"value": "1"
+						},
+						{
+							"key": "nomProduit",
+							"value": "Jambon"
+						},
+						{
+							"key": "descriProduit",
+							"value": "gens bons"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "accepte demande",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.app/declineRechargeCompte/RechargeCompte1",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"declineRechargeCompte",
+						"RechargeCompte1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "decline demande",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://encheres5ws-production.up.railway.app/acceptRechargeCompte/RechargeCompte1",
+					"protocol": "https",
+					"host": [
+						"encheres5ws-production",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"acceptRechargeCompte",
+						"RechargeCompte1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
