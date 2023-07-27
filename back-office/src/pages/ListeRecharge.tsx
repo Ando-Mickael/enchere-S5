@@ -33,13 +33,13 @@ export const ListeRecharge: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
                 <IonContent className="ion-padding">
-                    {demandes.map((demande, index) => {
-                        return (
-                            <IonList className="flex-container">
+                    <IonList className="flex-container">
+                        {demandes.map((demande, index) => {
+                            return (
                                 <ItemDemande demande={demande} key={index} />
-                            </IonList>
-                        );
-                    })}
+                            );
+                        })}
+                    </IonList>
                 </IonContent>
             </IonPage>
         </>

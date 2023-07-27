@@ -117,14 +117,14 @@ export const FormUpdate = () => {
                                         <IonLabel position='stacked'>Description du Produit</IonLabel>
                                         <IonInput
                                             onIonInput={(e: any) => setDescriProduit(e.target.value)}
-                                            placeholder={item["descriProduit"]} />
+                                            placeholder={item["descri"]} />
                                     </IonItem>
 
                                     <IonItem>
                                         <IonLabel position='stacked'>Prix minimum du produit</IonLabel>
                                         <IonInput
                                             onIonInput={(e: any) => setPrixProduit(e.target.value)}
-                                            placeholder={item["prixmin"]} />
+                                            placeholder={item["prixMin"]} />
                                     </IonItem>
                                     <IonItem>
                                         <IonLabel position='stacked'>Date debut</IonLabel>

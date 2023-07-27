@@ -36,14 +36,14 @@ export const FormLogin = () => {
 
                     <IonCol size="7">
                         <IonItem>
-                            <IonLabel position='floating'>Email</IonLabel>
+                            <IonLabel position='stacked'>Email</IonLabel>
                             <IonInput
                                 type="email"
                                 placeholder="admin@gmail.com"
                                 onIonInput={(e: any) => setEmail(e.target.value)} />
                         </IonItem>
                         <IonItem>
-                            <IonLabel position='floating'>Mot de passe</IonLabel>
+                            <IonLabel position='stacked'>Mot de passe</IonLabel>
                             <IonInput 
                                 clearInput={true}
                                 // type="password"
